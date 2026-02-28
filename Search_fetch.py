@@ -11,14 +11,8 @@ from dotenv import load_dotenv
 from langfuse import Langfuse
 from langfuse.callback import CallbackHandler
 
-# --------------------------------------------------
-# Load environment variables
-# --------------------------------------------------
 load_dotenv()
 
-# --------------------------------------------------
-# Langfuse setup (v2 compatible, non-blocking)
-# --------------------------------------------------
 try:
     langfuse = Langfuse()
     print("Langfuse initialized")
@@ -26,18 +20,14 @@ except Exception as e:
     print(f"Langfuse not connected: {e}")
     langfuse = None
 
-# --------------------------------------------------
-# State
-# --------------------------------------------------
+
 class AgentState(TypedDict):
     messages: List
     response: str
     search_results: Optional[str]
     needs_search: bool
 
-# --------------------------------------------------
-# LLM (Groq reads key from env automatically)
-# --------------------------------------------------
+
 print("DEBUG GROQ_API_KEY =", os.getenv("GROQ_API_KEY"))
 
 llm = ChatGroq(
@@ -45,16 +35,11 @@ llm = ChatGroq(
     temperature=0.7
 )
 
-# --------------------------------------------------
-# SerpAPI
-# --------------------------------------------------
 search = SerpAPIWrapper(
     serpapi_api_key=os.getenv("SERPAPI_API_KEY")
 )
 
-# --------------------------------------------------
-# Node 1: Router
-# --------------------------------------------------
+
 def router_node(state: AgentState) -> AgentState:
     print("\n[Router] Deciding if search is needed...")
 
@@ -78,9 +63,7 @@ Reply with ONLY 'search' or 'chat'. Nothing else.
     print(f"[Router] Decision: {'search' if state['needs_search'] else 'chat'}")
     return state
 
-# --------------------------------------------------
-# Node 2: Web Search
-# --------------------------------------------------
+
 def search_node(state: AgentState) -> AgentState:
     print("\n[Search Agent] Fetching from web...")
 
@@ -97,16 +80,14 @@ def search_node(state: AgentState) -> AgentState:
 
     return state
 
-# --------------------------------------------------
-# Node 3: Fetch Articles
-# --------------------------------------------------
+
 def fetch_article_node(state: AgentState) -> AgentState:
     print("\n[Fetch Agent] Reading full articles...")
 
     results = state.get("search_results", [])
     articles_text = ""
 
-    for item in results[:2]:  # top 2 articles only
+    for item in results[:2]:
         url = item.get("link")
         if not url:
             continue
@@ -131,9 +112,7 @@ def fetch_article_node(state: AgentState) -> AgentState:
     state["search_results"] = articles_text or "No article content found."
     return state
 
-# --------------------------------------------------
-# Node 4: Chat
-# --------------------------------------------------
+
 def chat_node(state: AgentState) -> AgentState:
     print("\n[Chat Node] Thinking...")
 
@@ -166,15 +145,11 @@ def chat_node(state: AgentState) -> AgentState:
     print(f"[Chat Node] Done: {response.content}")
     return state
 
-# --------------------------------------------------
-# Routing Logic
-# --------------------------------------------------
+
 def route_decision(state: AgentState) -> str:
     return "search" if state.get("needs_search") else "chat"
 
-# --------------------------------------------------
-# Build Graph
-# --------------------------------------------------
+
 graph = StateGraph(AgentState)
 
 graph.add_node("router", router_node)
@@ -196,9 +171,7 @@ graph.add_edge("chat", END)
 
 app = graph.compile()
 
-# --------------------------------------------------
-# TERMINAL INPUT (THIS IS THE CHANGE YOU WANTED)
-# --------------------------------------------------
+
 def ask_questions_from_terminal():
     print("\nAsk your questions below.")
     print("Type one question per line.")
@@ -222,8 +195,6 @@ def ask_questions_from_terminal():
         print(f"\nAssistant:\n{result['response']}\n")
         print("-" * 60)
 
-# --------------------------------------------------
-# Entry point
-# --------------------------------------------------
+
 if __name__ == "__main__":
     ask_questions_from_terminal()
