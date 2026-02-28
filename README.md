@@ -18,8 +18,9 @@ The goal of this project is to demonstrate **structured LLM orchestration** inst
 
 ---
 
-## Architecture Overview
+## Architecture
 
+![QueryRouter Architecture](flow.png)
 The system follows a **graph-based execution model**:
 
 1. **User Query**
