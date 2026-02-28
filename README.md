@@ -35,6 +35,20 @@ This avoids monolithic prompt logic and makes the system easier to extend and de
 
 ---
 
+---
+
+## Demo Video
+
+A short demonstration of the project workflow and UI is available below:
+
+[▶️ Watch Project Demo](QueryReporter-AI.webm)
+
+> Note: GitHub does not support inline video playback in README files. Clicking the link will open or download the video depending on your browser.
+
+---
+
+
+
 ## Project Structure
 
 QueryRouter-AI/
