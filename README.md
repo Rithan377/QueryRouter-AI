@@ -12,6 +12,7 @@ The goal of this project is to demonstrate **structured LLM orchestration** inst
 ![FAISS](https://img.shields.io/badge/FAISS-Vector_Search-informational)
 ![RAG](https://img.shields.io/badge/RAG-LLM_Pipeline-purple)
 ![ngrok](https://img.shields.io/badge/ngrok-Tunneling-lightgrey)
+![SerpAPI](https://img.shields.io/badge/SerpAPI-Web_Search_for_LLMs-orange)
 
 ## Key Features
 
