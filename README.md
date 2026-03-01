@@ -7,7 +7,7 @@ The goal of this project is to demonstrate **structured LLM orchestration** inst
 
 ---
 
-![Python](https://img.shields.io/badge/Python-3.9+-blue)
+![Python](https://img.shields.io/badge/Python-3.10-blue)
 ![FastAPI](https://img.shields.io/badge/FastAPI-green)
 ![FAISS](https://img.shields.io/badge/FAISS-Vector_Search-informational)
 ![RAG](https://img.shields.io/badge/RAG-LLM_Pipeline-purple)
