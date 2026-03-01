@@ -50,6 +50,7 @@ A short demonstration of the project workflow and UI is available below:
 
 
 ## Project Structure
+```
 
 QueryRouter-AI/
 │
@@ -61,7 +62,7 @@ QueryRouter-AI/
 ├── requirement.txt # Python dependencies
 ├── .gitignore
 └── README.md
-
+ ```
 
 ---
 
